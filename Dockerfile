@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY /app .
 
-RUN gradle build
+RUN gradle installBootDist
 
-CMD java -jar build/libs/app-0.0.1-SNAPSHOT.jar
+CMD /app/build/install/app/bin/app
