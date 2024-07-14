@@ -2,6 +2,8 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.2.8-SNAPSHOT"
 	id("io.spring.dependency-management") version "1.1.6"
+	checkstyle
+	application
 }
 
 group = "hexlet.code"
@@ -27,4 +29,8 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+application {
+	mainClass = "hexlet.code.app.AppApplication"
 }
