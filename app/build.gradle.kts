@@ -27,6 +27,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.data:spring-data-jpa:3.1.3")
 	implementation("org.springframework.boot:spring-boot-starter-web:3.3.1")
+	implementation("org.springframework.boot:spring-boot-starter-security:3.3.1")
 
 	runtimeOnly("com.h2database:h2")
 	implementation("org.postgresql:postgresql:42.7.3")
@@ -36,6 +37,8 @@ dependencies {
 	implementation("jakarta.validation:jakarta.validation-api:3.1.0")
 
 	implementation("org.mapstruct:mapstruct:1.6.0.Beta2")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
+	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
 }
 
 tasks.withType<Test> {
