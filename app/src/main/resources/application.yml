@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    output:
+      ansi:
+        enabled: always
+    hibernate:
+      ddl-auto: update
+  profiles:
+    active: development
+
+logging:
+  level:
+    root: WARN
