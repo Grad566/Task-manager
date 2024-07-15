@@ -32,6 +32,8 @@ dependencies {
 	implementation("org.postgresql:postgresql:42.7.3")
 
 	compileOnly("org.projectlombok:lombok:1.18.34")
+
+	implementation("jakarta.validation:jakarta.validation-api:3.1.0")
 }
 
 tasks.withType<Test> {
