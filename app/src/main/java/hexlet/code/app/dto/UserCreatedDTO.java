@@ -15,7 +15,7 @@ public class UserCreatedDTO {
     @NotNull
     @Email
     private String email;
-    
+
     private String firstName;
 
     private String lastName;

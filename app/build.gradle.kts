@@ -34,6 +34,8 @@ dependencies {
 	compileOnly("org.projectlombok:lombok:1.18.34")
 
 	implementation("jakarta.validation:jakarta.validation-api:3.1.0")
+
+	implementation("org.mapstruct:mapstruct:1.6.0.Beta2")
 }
 
 tasks.withType<Test> {
