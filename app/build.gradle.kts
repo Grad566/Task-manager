@@ -28,6 +28,7 @@ dependencies {
 	implementation("org.springframework.data:spring-data-jpa:3.1.3")
 
 	runtimeOnly("com.h2database:h2")
+	implementation("org.postgresql:postgresql:42.7.3")
 
 	compileOnly("org.projectlombok:lombok:1.18.34")
 }
