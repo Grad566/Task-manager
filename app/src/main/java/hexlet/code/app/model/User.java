@@ -32,7 +32,7 @@ public class User {
 
     @NotNull
     @Size(min = 3)
-    private String password;
+    private String passwordDigest;
 
     @CreatedDate
     private LocalDate createdAt;
