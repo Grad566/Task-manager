@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://dpg-cq9qimtds78s739hgsk0-a:5432/seconddb_oj49
+    driver-class-name: org.postgresql.Driver
+    username: seconddb_oj49_user
+    password: yzV1zGnsYjwlnsdgWB3fPs0s0fHAOUFr
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
