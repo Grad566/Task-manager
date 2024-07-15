@@ -24,7 +24,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.data:spring-data-jpa:3.1.3")
+
+	runtimeOnly("com.h2database:h2")
+
+	compileOnly("org.projectlombok:lombok:1.18.34")
 }
 
 tasks.withType<Test> {
