@@ -26,6 +26,7 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.data:spring-data-jpa:3.1.3")
+	implementation("org.springframework.boot:spring-boot-starter-web:3.3.1")
 
 	runtimeOnly("com.h2database:h2")
 	implementation("org.postgresql:postgresql:42.7.3")
