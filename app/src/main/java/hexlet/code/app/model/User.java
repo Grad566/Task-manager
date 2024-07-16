@@ -1,6 +1,11 @@
 package hexlet.code.app.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -12,11 +17,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-@Getter
-@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +37,7 @@ public class User {
 
     @NotNull
     @Size(min = 3)
-    private String passwordDigest;
+    private String password;
 
     @CreatedDate
     private LocalDate createdAt;

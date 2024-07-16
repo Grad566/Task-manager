@@ -4,6 +4,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.6"
 	checkstyle
 	application
+	id("io.freefair.lombok") version "8.6"
 }
 
 group = "hexlet.code"
@@ -28,17 +29,20 @@ dependencies {
 	implementation("org.springframework.data:spring-data-jpa:3.1.3")
 	implementation("org.springframework.boot:spring-boot-starter-web:3.3.1")
 	implementation("org.springframework.boot:spring-boot-starter-security:3.3.1")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 
 	runtimeOnly("com.h2database:h2")
 	implementation("org.postgresql:postgresql:42.7.3")
 
-	compileOnly("org.projectlombok:lombok:1.18.34")
-
-	implementation("jakarta.validation:jakarta.validation-api:3.1.0")
+//	implementation("jakarta.validation:jakarta.validation-api:3.1.0")
 
 	implementation("org.mapstruct:mapstruct:1.6.0.Beta2")
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
 	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+
+	testImplementation("net.javacrumbs.json-unit:json-unit-assertj:3.2.2")
+	implementation("net.datafaker:datafaker:2.0.2")
+	implementation("org.instancio:instancio-junit:3.3.0")
 }
 
 tasks.withType<Test> {
