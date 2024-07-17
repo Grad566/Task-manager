@@ -31,11 +31,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web:3.3.1")
 	implementation("org.springframework.boot:spring-boot-starter-security:3.3.1")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	testImplementation("org.springframework.security:spring-security-test")
 
 	runtimeOnly("com.h2database:h2")
 	implementation("org.postgresql:postgresql:42.7.3")
 
-//	implementation("jakarta.validation:jakarta.validation-api:3.1.0")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 
 	implementation("org.mapstruct:mapstruct:1.6.0.Beta2")
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")

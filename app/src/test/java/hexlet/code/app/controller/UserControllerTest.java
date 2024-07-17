@@ -2,6 +2,7 @@ package hexlet.code.app.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,6 +51,8 @@ public class UserControllerTest {
 
     private User testUser;
 
+    private JwtRequestPostProcessor token;
+
     @BeforeEach
     public void setup() {
         testUser = Instancio.of(User.class)
@@ -60,11 +64,12 @@ public class UserControllerTest {
                 .supply(Select.field(User::getLastName), () -> faker.name().lastName())
                 .supply(Select.field(User::getPassword), () -> faker.internet().password())
                 .create();
+        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
     }
 
     @Test
     public void testIndex() throws Exception {
-        mockMvc.perform(get("/api/users"))
+        mockMvc.perform(get("/api/users").with(token))
                 .andExpect(status().isOk());
     }
 
@@ -72,6 +77,7 @@ public class UserControllerTest {
     public void testCreate() throws Exception {
 
         var request = post("/api/users")
+                .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(testUser));
 
@@ -93,6 +99,7 @@ public class UserControllerTest {
         userRepository.save(testUser);
 
         var request = put("/api/users/" + testUser.getId())
+                .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(updatedData));
 
@@ -109,6 +116,7 @@ public class UserControllerTest {
         fakeUser.put("email", "2");
         fakeUser.put("password", "0");
         var request = post("/api/users")
+                .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(fakeUser));
 
@@ -119,7 +127,7 @@ public class UserControllerTest {
     public void testShow() throws Exception {
         userRepository.save(testUser);
 
-        mockMvc.perform(get("/api/users/" + testUser.getId()))
+        mockMvc.perform(get("/api/users/" + testUser.getId()).with(token))
                 .andExpect(status().isOk());
     }
 
@@ -127,7 +135,7 @@ public class UserControllerTest {
     public void testDestroy() throws Exception {
         userRepository.save(testUser);
 
-        mockMvc.perform(delete("/api/users/" + testUser.getId()))
+        mockMvc.perform(delete("/api/users/" + testUser.getId()).with(token))
                 .andExpect(status().isNoContent());
     }
 }

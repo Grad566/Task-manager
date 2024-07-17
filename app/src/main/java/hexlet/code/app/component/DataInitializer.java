@@ -1,7 +1,8 @@
 package hexlet.code.app.component;
 
-import hexlet.code.app.dto.UserCreatedDTO;
-import hexlet.code.app.service.UserService;
+import hexlet.code.app.model.User;
+import hexlet.code.app.repository.UserRepository;
+import hexlet.code.app.service.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -13,13 +14,18 @@ import org.springframework.stereotype.Component;
 public class DataInitializer implements ApplicationRunner {
 
     @Autowired
-    private UserService userService;
+    private final UserRepository userRepository;
+
+    @Autowired
+    private final CustomUserDetailsService userService;
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        var data = new UserCreatedDTO();
-        data.setEmail("hexlet@example.com");
-        data.setPassword("qwerty");
-        userService.create(data);
+        var email = "hexlet@example.com";
+        var userData = new User();
+        userData.setEmail(email);
+        userData.setPassword("qwerty");
+        userService.createUser(userData);
     }
 }
