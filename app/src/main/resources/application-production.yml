@@ -4,5 +4,3 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: seconddb_oj49_user
     password: yzV1zGnsYjwlnsdgWB3fPs0s0fHAOUFr
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
