@@ -12,9 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import hexlet.code.app.model.User;
 import hexlet.code.app.repository.UserRepository;
-import hexlet.code.app.service.UserService;
+import hexlet.code.app.util.ModelGenerator;
 import org.instancio.Instancio;
-import org.instancio.Select;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.datafaker.Faker;
-
 import java.util.HashMap;
+import java.util.Map;
 
 
 @SpringBootTest
@@ -38,13 +36,10 @@ public class UserControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private Faker faker;
+    private ModelGenerator modelGenerator;
 
     @Autowired
     private ObjectMapper om;
@@ -55,16 +50,10 @@ public class UserControllerTest {
 
     @BeforeEach
     public void setup() {
-        testUser = Instancio.of(User.class)
-                .ignore(Select.field(User::getUpdatedAt))
-                .ignore(Select.field(User::getCreatedAt))
-                .ignore(Select.field(User::getId))
-                .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
-                .supply(Select.field(User::getFirstName), () -> faker.name().firstName())
-                .supply(Select.field(User::getLastName), () -> faker.name().lastName())
-                .supply(Select.field(User::getPassword), () -> faker.internet().password())
-                .create();
         token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+
+        testUser = Instancio.of(modelGenerator.getUserModel()).create();
+        userRepository.save(testUser);
     }
 
     @Test
@@ -74,29 +63,35 @@ public class UserControllerTest {
     }
 
     @Test
+    public void testShow() throws Exception {
+        mockMvc.perform(get("/api/users/" + testUser.getId()).with(token))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     public void testCreate() throws Exception {
+        var createdUser = new HashMap<>(Map.of(
+                "password", "zxc123",
+                "email", "denis@gmail.com"
+        ));
 
         var request = post("/api/users")
                 .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(testUser));
+                .content(om.writeValueAsString(createdUser));
 
         mockMvc.perform(request).andExpect(status().isCreated());
 
-        var user = userRepository.findByEmail(testUser.getEmail()).get();
+        var user = userRepository.findByEmail(createdUser.get("email")).get();
 
         assertNotNull(user);
-        assertThat(user.getFirstName()).isEqualTo(testUser.getFirstName());
-        assertThat(user.getLastName()).isEqualTo(testUser.getLastName());
-        assertThat(user.getEmail()).isEqualTo(testUser.getEmail());
+        assertThat(user.getEmail()).isEqualTo(createdUser.get("email"));
     }
 
     @Test
     public void testUpdate() throws Exception {
         var updatedData = new HashMap<String, String>();
         updatedData.put("email", "2008deous@gmail.com");
-
-        userRepository.save(testUser);
 
         var request = put("/api/users/" + testUser.getId())
                 .with(token)
@@ -105,9 +100,9 @@ public class UserControllerTest {
 
         mockMvc.perform(request).andExpect(status().isOk());
 
-        testUser = userRepository.findById(testUser.getId()).get();
+        var updatedUser = userRepository.findById(testUser.getId()).get();
 
-        assertThat(testUser.getEmail()).isEqualTo(updatedData.get("email"));
+        assertThat(updatedUser.getEmail()).isEqualTo(updatedData.get("email"));
     }
 
     @Test
@@ -124,17 +119,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testShow() throws Exception {
-        userRepository.save(testUser);
-
-        mockMvc.perform(get("/api/users/" + testUser.getId()).with(token))
-                .andExpect(status().isOk());
-    }
-
-    @Test
     public void testDestroy() throws Exception {
-        userRepository.save(testUser);
-
         mockMvc.perform(delete("/api/users/" + testUser.getId()).with(token))
                 .andExpect(status().isNoContent());
     }
