@@ -8,6 +8,7 @@ import hexlet.code.app.mapper.UserMapper;
 import hexlet.code.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class UserService {
         return users.stream().map(userMapper::map).toList();
     }
 
+    @Transactional
     public UserDTO create(UserCreatedDTO data) {
         var user = userMapper.map(data);
         userRepository.save(user);
@@ -37,6 +39,7 @@ public class UserService {
         return userMapper.map(user);
     }
 
+    @Transactional
     public UserDTO update(UserUpdatedDTO data, Long id) {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with " + id + " not found!"));

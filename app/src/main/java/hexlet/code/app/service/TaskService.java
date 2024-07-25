@@ -8,6 +8,7 @@ import hexlet.code.app.mapper.TaskMapper;
 import hexlet.code.app.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,12 +29,14 @@ public class TaskService {
         return taskMapper.map(task);
     }
 
+    @Transactional
     public TaskDTO create(TaskCreatedDTO data) {
         var task = taskMapper.map(data);
         taskRepository.save(task);
         return taskMapper.map(task);
     }
 
+    @Transactional
     public TaskDTO updated(TaskUpdatedDTO data, Long id) {
         var task =  taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with " + id + " not found"));
