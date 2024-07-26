@@ -38,7 +38,7 @@ public class TaskStatusService {
         return mapper.map(taskStatus);
     }
 
-    @Transactional
+    @Transactional()
     public TaskStatusDTO update(TaskStatusUpdatedDTO data, Long id) {
         var taskStatus = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task status with id " + id + " not found!"));
