@@ -13,7 +13,7 @@ public class TaskUpdatedDTO {
     private JsonNullable<String> title;
     private JsonNullable<Integer> index;
     private JsonNullable<String> content;
-    @JsonProperty("taskStatus")
+    @JsonProperty("status")
     private JsonNullable<String> slug;
     @JsonProperty("assignee_id")
     private JsonNullable<Long> assigneeId;

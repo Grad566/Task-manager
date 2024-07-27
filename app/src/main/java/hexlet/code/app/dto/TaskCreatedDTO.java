@@ -20,7 +20,7 @@ public class TaskCreatedDTO {
     private JsonNullable<String> content;
 
     @NotNull
-    @JsonProperty("taskStatus")
+    @JsonProperty("status")
     private String slug;
 
     @JsonProperty("assignee_id")
