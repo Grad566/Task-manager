@@ -92,7 +92,7 @@ class TaskControllerTest {
     public void testCreate() throws Exception {
         var data = new HashMap<>(Map.of(
                 "title", "Task name",
-                "taskStatus", "to_review"
+                "status", "to_review"
         ));
 
         var request = post("/api/tasks")
@@ -105,7 +105,7 @@ class TaskControllerTest {
 
         assertNotNull(task);
         assertThat(task.getName()).isEqualTo(data.get("title"));
-        assertThat(task.getTaskStatus().getSlug()).isEqualTo(data.get("taskStatus"));
+        assertThat(task.getTaskStatus().getSlug()).isEqualTo(data.get("status"));
     }
 
     @Test
