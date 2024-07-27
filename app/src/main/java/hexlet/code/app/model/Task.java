@@ -48,7 +48,7 @@ public class Task implements BaseEntity {
     @JoinColumn(name = "user_id")
     private User assignee;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "task_label",
                 joinColumns = @JoinColumn(name = "label_id", referencedColumnName = "id"),
                 inverseJoinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id")

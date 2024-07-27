@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/api/tasks")
@@ -27,8 +29,8 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping(path = "")
-    public ResponseEntity<List<TaskDTO>> index() {
-        var tasks = taskService.getAll();
+    public ResponseEntity<List<TaskDTO>> index(@RequestParam(required = false) Map<String, String> filterParams) {
+        var tasks = taskService.getAll(filterParams);
         return  ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(tasks.size()))
                 .body(tasks);
