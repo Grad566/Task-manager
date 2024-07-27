@@ -1,5 +1,6 @@
 package hexlet.code.app.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -40,6 +41,7 @@ public class User implements UserDetails, BaseEntity {
 
     @NotNull
     @Email
+    @Column(unique = true)
     private String email;
 
     @NotNull

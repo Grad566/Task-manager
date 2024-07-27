@@ -44,6 +44,7 @@ public class DataInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        userRepository.deleteAll();
         if (userRepository.findByEmail("hexlet@example.com").isEmpty()) {
             var email = "hexlet@example.com";
             var userData = new User();
