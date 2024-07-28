@@ -6,6 +6,7 @@ plugins {
 	application
 	id("io.freefair.lombok") version "8.6"
 	jacoco
+	id ("io.sentry.jvm.gradle") version "4.10.0"
 }
 
 group = "hexlet.code"
@@ -66,4 +67,12 @@ tasks.jacocoTestReport {
 	reports {
 		xml.required = true
 	}
+}
+
+sentry {
+	includeSourceContext = true
+
+	org = "nocompany-sq"
+	projectName = "java-spring-boot"
+	authToken = System.getenv("SENTRY_AUTH_TOKEN")
 }
