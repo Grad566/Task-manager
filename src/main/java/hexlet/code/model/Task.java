@@ -45,7 +45,7 @@ public class Task implements BaseEntity {
     @JoinColumn(name = "task_status_id")
     private TaskStatus taskStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User assignee;
 
