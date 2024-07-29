@@ -42,18 +42,18 @@ public class Task implements BaseEntity {
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "task_status_id")
+//    @JoinColumn(name = "task_status_id")
     private TaskStatus taskStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+//    @JoinColumn(name = "user_id")
     private User assignee;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "task_label",
-                joinColumns = @JoinColumn(name = "label_id", referencedColumnName = "id"),
-                inverseJoinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id")
-    )
+//    @JoinTable(name = "task_label",
+//                joinColumns = @JoinColumn(name = "label_id", referencedColumnName = "id"),
+//                inverseJoinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id")
+//    )
     private List<Label> labels;
 
     @CreatedDate
