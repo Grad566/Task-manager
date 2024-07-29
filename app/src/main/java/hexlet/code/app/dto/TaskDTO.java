@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,6 +24,8 @@ public class TaskDTO {
     private String title;
 
     private String content;
+
+    private List<Long> taskLabelIds;
 
     @JsonProperty("taskStatus")
     private String slug;

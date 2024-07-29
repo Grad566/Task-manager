@@ -2,8 +2,10 @@ package hexlet.code.app.controller;
 
 import hexlet.code.app.dto.TaskCreatedDTO;
 import hexlet.code.app.dto.TaskDTO;
+import hexlet.code.app.dto.TaskParamDTO;
 import hexlet.code.app.dto.TaskUpdatedDTO;
 import hexlet.code.app.service.TaskService;
+import hexlet.code.app.specification.TaskSpecification;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,8 +31,8 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping(path = "")
-    public ResponseEntity<List<TaskDTO>> index(@RequestParam(required = false) Map<String, String> filterParams) {
-        var tasks = taskService.getAll(filterParams);
+    public ResponseEntity<List<TaskDTO>> index(TaskParamDTO params) {
+        var tasks = taskService.getAll(params);
         return  ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(tasks.size()))
                 .body(tasks);
