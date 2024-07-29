@@ -129,6 +129,7 @@ class TaskControllerTest {
         var updatedData = new HashMap<String, String>();
         updatedData.put("title", "news");
         updatedData.put("content", "contents");
+        updatedData.put("assignee_id", "2");
 
         var request = put("/api/tasks/" + testTask.getId())
                 .with(token)
