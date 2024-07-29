@@ -27,6 +27,6 @@ public class TaskDTO {
 
     private List<Long> taskLabelIds;
 
-    @JsonProperty("taskStatus")
+    @JsonProperty("status")
     private String slug;
 }
