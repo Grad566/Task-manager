@@ -65,8 +65,12 @@ public abstract class TaskMapper {
     }
 
     public List<Long> toLabelIdsList(List<Label> labels) {
-        return labels.stream()
-                .map(Label::getId)
-                .toList();
+        if (labels == null) {
+            return new ArrayList<Long>();
+        } else {
+            return labels.stream()
+                    .map(Label::getId)
+                    .toList();
+        }
     }
 }

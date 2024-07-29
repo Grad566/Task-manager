@@ -2,9 +2,12 @@ package hexlet.code.app.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.app.dto.TaskCreatedDTO;
+import hexlet.code.app.model.Label;
 import hexlet.code.app.model.Task;
 import hexlet.code.app.model.TaskStatus;
 import hexlet.code.app.model.User;
+import hexlet.code.app.repository.LabelRepository;
 import hexlet.code.app.repository.TaskRepository;
 import hexlet.code.app.repository.TaskStatusRepository;
 import hexlet.code.app.repository.UserRepository;
@@ -19,8 +22,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -47,6 +51,9 @@ class TaskControllerTest {
     private TaskStatusRepository taskStatusRepository;
 
     @Autowired
+    private LabelRepository labelRepository;
+
+    @Autowired
     private ModelGenerator modelGenerator;
 
     @Autowired
@@ -58,6 +65,8 @@ class TaskControllerTest {
 
     private Task testTask;
 
+    private Label testLabel;
+
     private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
 
     @BeforeEach
@@ -67,12 +76,17 @@ class TaskControllerTest {
         testUser = Instancio.of(modelGenerator.getUserModel()).create();
         testTaskStatus = Instancio.of(modelGenerator.getStatusModel()).create();
         testTask = Instancio.of(modelGenerator.getTaskModel()).create();
+        testLabel = Instancio.of(modelGenerator.getLabelModel()).create();
+
 
         userRepository.save(testUser);
         taskStatusRepository.save(testTaskStatus);
+        labelRepository.save(testLabel);
 
         testTask.setAssignee(testUser);
         testTask.setTaskStatus(testTaskStatus);
+        testTask.setLabels(new ArrayList<>(List.of(testLabel)));
+
         taskRepository.save(testTask);
     }
 
@@ -90,10 +104,12 @@ class TaskControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        var data = new HashMap<>(Map.of(
-                "title", "Task name",
-                "status", "to_review"
-        ));
+        var taskStatus = taskStatusRepository.findBySlug("to_review").get();
+        var label = labelRepository.findByName("feature").get();
+        var data = new TaskCreatedDTO();
+        String name = "New Task Name";
+        data.setTitle(name);
+        data.setSlug(taskStatus.getSlug());
 
         var request = post("/api/tasks")
                 .with(token)
@@ -101,11 +117,11 @@ class TaskControllerTest {
                 .content(om.writeValueAsString(data));
 
         mockMvc.perform(request).andExpect(status().isCreated());
-        var task = taskRepository.findByName(data.get("title")).get();
+        var task = taskRepository.findByName(data.getTitle()).get();
 
         assertNotNull(task);
-        assertThat(task.getName()).isEqualTo(data.get("title"));
-        assertThat(task.getTaskStatus().getSlug()).isEqualTo(data.get("status"));
+        assertThat(task.getName()).isEqualTo(data.getTitle());
+        assertThat(task.getTaskStatus().getSlug()).isEqualTo(data.getSlug());
     }
 
     @Test
