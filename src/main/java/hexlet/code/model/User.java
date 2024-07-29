@@ -1,5 +1,6 @@
 package hexlet.code.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -48,7 +49,7 @@ public class User implements UserDetails, BaseEntity {
     @Size(min = 3)
     private String password;
 
-    @OneToMany(mappedBy = "assignee")
+    @OneToMany(mappedBy = "assignee", cascade = CascadeType.MERGE)
     private List<Task> tasks;
 
     @CreatedDate
