@@ -1,0 +1,24 @@
+spring:
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    open-in-view: false
+    output:
+      ansi:
+        enabled: always
+    hibernate:
+      ddl-auto: update
+  profiles:
+    active: development
+
+logging:
+  level:
+    root: WARN
+
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem
+
+sentry:
+  dsn: https://b9e9f774f3e622214e9cc46ef9018c6f@o4507674077429760.ingest.de.sentry.io/4507677936648272
+  sentry.traces-sample-rate: 1.0

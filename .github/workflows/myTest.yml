@@ -17,12 +17,8 @@ jobs:
         uses: gradle/gradle-build-action@v3
         with:
           gradle-version: 8.7
-      - run: |
-          cd app
-          make lint
-      - run: |
-          cd app
-          make test
+      - run: make lint
+      - run: make test
       - name: Code coverage
         uses: paambaati/codeclimate-action@v5.0.0
         env:
