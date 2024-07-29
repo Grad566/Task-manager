@@ -48,8 +48,8 @@ public class User implements UserDetails, BaseEntity {
     @Size(min = 3)
     private String password;
 
-    @OneToMany(mappedBy = "assignee")
-    private List<Task> tasks;
+//    @OneToMany(mappedBy = "assignee")
+//    private List<Task> tasks;
 
     @CreatedDate
     private LocalDate createdAt;
@@ -57,12 +57,12 @@ public class User implements UserDetails, BaseEntity {
     @LastModifiedDate
     private LocalDate updatedAt;
 
-    @PreRemove
-    private void checkTasks() {
-        if (!tasks.isEmpty()) {
-            throw new IllegalArgumentException("User has tasks and can't be removed");
-        }
-    }
+//    @PreRemove
+//    private void checkTasks() {
+//        if (!tasks.isEmpty()) {
+//            throw new IllegalArgumentException("User has tasks and can't be removed");
+//        }
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

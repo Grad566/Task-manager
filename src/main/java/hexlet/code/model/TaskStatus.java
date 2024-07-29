@@ -42,13 +42,13 @@ public class TaskStatus {
     @CreatedDate
     private LocalDate createdAt;
 
-    @OneToMany(mappedBy = "taskStatus", fetch = FetchType.EAGER)
-    private List<Task> tasks;
+//    @OneToMany(mappedBy = "taskStatus", fetch = FetchType.EAGER)
+//    private List<Task> tasks;
 
-    @PreRemove
-    private void checkTasks() {
-        if (!tasks.isEmpty()) {
-            throw new IllegalArgumentException("Task status is associated with tasks and can't be deleted");
-        }
-    }
+//    @PreRemove
+//    private void checkTasks() {
+//        if (!tasks.isEmpty()) {
+//            throw new IllegalArgumentException("Task status is associated with tasks and can't be deleted");
+//        }
+//    }
 }

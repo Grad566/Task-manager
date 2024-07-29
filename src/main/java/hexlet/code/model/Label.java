@@ -31,8 +31,8 @@ public class Label {
     @Size(min = 3, max = 1000)
     private String name;
 
-    @ManyToMany(mappedBy = "labels")
-    private List<Task> tasks;
+//    @ManyToMany(mappedBy = "labels")
+//    private List<Task> tasks;
 
     @CreatedDate
     private LocalDate createdAt;
