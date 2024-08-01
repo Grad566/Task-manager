@@ -6,7 +6,10 @@ import hexlet.code.dto.UserUpdatedDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.repository.UserRepository;
+import hexlet.code.util.UserUtil;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.AccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +22,9 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserUtil userUtil;
 
     public UserDTO show(Long id) {
         var user = userRepository.findById(id)
@@ -39,18 +45,28 @@ public class UserService {
         return userMapper.map(user);
     }
 
+    @SneakyThrows
     @Transactional
     public UserDTO update(UserUpdatedDTO data, Long id) {
-        var user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User with " + id + " not found!"));
-        userMapper.update(data, user);
+        if (userUtil.isTheSameUser(id)) {
+            var user = userRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("User with " + id + " not found!"));
+            userMapper.update(data, user);
 
-        userRepository.save(user);
+            userRepository.save(user);
 
-        return userMapper.map(user);
+            return userMapper.map(user);
+        } else {
+            throw new AccessException("One user can't change another user");
+        }
     }
 
+    @SneakyThrows
     public void destroy(Long id) {
-        userRepository.deleteById(id);
+        if (userUtil.isTheSameUser(id)) {
+            userRepository.deleteById(id);
+        } else {
+            throw new AccessException("One user can't change another user");
+        }
     }
 }
