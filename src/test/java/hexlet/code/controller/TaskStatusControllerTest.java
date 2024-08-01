@@ -1,6 +1,8 @@
 package hexlet.code.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.dto.TaskStatusCreatedDTO;
+import hexlet.code.dto.TaskStatusUpdatedDTO;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.util.ModelGenerator;
@@ -8,6 +10,7 @@ import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +19,6 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
@@ -68,10 +70,7 @@ class TaskStatusControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        Map<String, String> data = new HashMap<>(Map.of(
-                "name", "testStats",
-                "slug", "testStats"
-        ));
+        var data = new TaskStatusCreatedDTO("testStats", "testStats");
 
         var request = post("/api/task_statuses")
                 .with(token)
@@ -80,17 +79,17 @@ class TaskStatusControllerTest {
 
         mockMvc.perform(request).andExpect(status().isCreated());
 
-        var taskStatus = repository.findBySlug(data.get("slug")).get();
+        var taskStatus = repository.findBySlug(data.getSlug()).get();
 
         assertNotNull(taskStatus);
-        Assertions.assertThat(taskStatus.getName()).isEqualTo(data.get("name"));
-        Assertions.assertThat(taskStatus.getSlug()).isEqualTo(data.get("slug"));
+        Assertions.assertThat(taskStatus.getName()).isEqualTo(data.getName());
+        Assertions.assertThat(taskStatus.getSlug()).isEqualTo(data.getSlug());
     }
 
     @Test
     public void testUpdate() throws Exception {
-        var updatedData = new HashMap<String, String>();
-        updatedData.put("name", "newses");
+        var updatedData = new TaskStatusUpdatedDTO();
+        updatedData.setName(JsonNullable.of("newses"));
 
         var request = put("/api/task_statuses/" + testTaskStatus.getId())
                 .with(token)
@@ -102,7 +101,7 @@ class TaskStatusControllerTest {
         var updatedTask = repository.findById(testTaskStatus.getId()).get();
 
         assertNotNull(updatedTask);
-        Assertions.assertThat(updatedTask.getName()).isEqualTo(updatedData.get("name"));
+        Assertions.assertThat(updatedTask.getName()).isEqualTo(updatedData.getName().get());
     }
 
     @Test
