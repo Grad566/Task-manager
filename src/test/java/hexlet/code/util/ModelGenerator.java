@@ -21,15 +21,11 @@ public class ModelGenerator {
     private Model<TaskStatus> statusModel;
     private Model<Task> taskModel;
     private Model<Label> labelModel;
-
-    @Autowired
     private Faker faker;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @PostConstruct
     private void init() {
+        faker = new Faker();
 
         userModel = Instancio.of(User.class)
                 .ignore(Select.field(User::getUpdatedAt))
