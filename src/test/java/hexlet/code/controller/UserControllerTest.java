@@ -10,12 +10,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
+import hexlet.code.dto.UserCreatedDTO;
+import hexlet.code.dto.UserUpdatedDTO;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +29,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
-import java.util.Map;
 
 
 @SpringBootTest
@@ -70,10 +72,9 @@ public class UserControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        var createdUser = new HashMap<>(Map.of(
-                "password", "zxc123",
-                "email", "denis@gmail.com"
-        ));
+        var createdUser = new UserCreatedDTO();
+        createdUser.setPassword("zxc123");
+        createdUser.setEmail("denis@gmail.com");
 
         var request = post("/api/users")
                 .with(token)
@@ -82,16 +83,16 @@ public class UserControllerTest {
 
         mockMvc.perform(request).andExpect(status().isCreated());
 
-        var user = userRepository.findByEmail(createdUser.get("email")).get();
+        var user = userRepository.findByEmail(createdUser.getEmail()).get();
 
         assertNotNull(user);
-        assertThat(user.getEmail()).isEqualTo(createdUser.get("email"));
+        assertThat(user.getEmail()).isEqualTo(createdUser.getEmail());
     }
 
     @Test
     public void testUpdate() throws Exception {
-        var updatedData = new HashMap<String, String>();
-        updatedData.put("email", "2008deous@gmail.com");
+        var updatedData = new UserUpdatedDTO();
+        updatedData.setEmail(JsonNullable.of("2008deous@gmail.com"));
 
         var request = put("/api/users/" + testUser.getId())
                 .with(token)
@@ -102,7 +103,7 @@ public class UserControllerTest {
 
         var updatedUser = userRepository.findById(testUser.getId()).get();
 
-        assertThat(updatedUser.getEmail()).isEqualTo(updatedData.get("email"));
+        assertThat(updatedUser.getEmail()).isEqualTo(updatedData.getEmail().get());
     }
 
     @Test
