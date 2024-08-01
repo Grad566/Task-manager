@@ -92,10 +92,11 @@ public class UserControllerTest {
     @Test
     public void testUpdate() throws Exception {
         var updatedData = new UserUpdatedDTO();
+        var currentToken = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
         updatedData.setEmail(JsonNullable.of("2008deous@gmail.com"));
 
         var request = put("/api/users/" + testUser.getId())
-                .with(token)
+                .with(currentToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(updatedData));
 
@@ -121,7 +122,14 @@ public class UserControllerTest {
 
     @Test
     public void testDestroy() throws Exception {
-        mockMvc.perform(delete("/api/users/" + testUser.getId()).with(token))
+        var currentToken = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
+        mockMvc.perform(delete("/api/users/" + testUser.getId()).with(currentToken))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void testDestroyFromOtherUser() throws Exception {
+        mockMvc.perform(delete("/api/users/" + testUser.getId()).with(token))
+                .andExpect(status().isForbidden());
     }
 }
