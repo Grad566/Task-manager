@@ -57,13 +57,13 @@ class TaskStatusControllerTest {
     }
 
     @Test
-    public void testIndex() throws Exception {
+    public void testGetAll() throws Exception {
         mockMvc.perform(get("/api/task_statuses").with(token))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testShow() throws Exception {
+    public void testGetById() throws Exception {
         mockMvc.perform(get("/api/task_statuses/" + testTaskStatus.getId()).with(token))
                 .andExpect(status().isOk());
     }
@@ -118,7 +118,7 @@ class TaskStatusControllerTest {
     }
 
     @Test
-    public void testDestroy() throws Exception {
+    public void testDelete() throws Exception {
         mockMvc.perform(delete("/api/task_statuses/" + testTaskStatus.getId()).with(token))
                 .andExpect(status().isNoContent());
     }

@@ -59,13 +59,13 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testIndex() throws Exception {
+    public void testGetAll() throws Exception {
         mockMvc.perform(get("/api/users").with(token))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testShow() throws Exception {
+    public void testGetById() throws Exception {
         mockMvc.perform(get("/api/users/" + testUser.getId()).with(token))
                 .andExpect(status().isOk());
     }
@@ -121,14 +121,14 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testDestroy() throws Exception {
+    public void testDelete() throws Exception {
         var currentToken = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
         mockMvc.perform(delete("/api/users/" + testUser.getId()).with(currentToken))
                 .andExpect(status().isNoContent());
     }
 
     @Test
-    public void testDestroyFromOtherUser() throws Exception {
+    public void testDeleteWithInvalidUser() throws Exception {
         mockMvc.perform(delete("/api/users/" + testUser.getId()).with(token))
                 .andExpect(status().isForbidden());
     }

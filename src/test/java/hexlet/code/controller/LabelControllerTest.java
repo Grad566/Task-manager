@@ -59,13 +59,13 @@ class LabelControllerTest {
     }
 
     @Test
-    public void testIndex() throws Exception {
+    public void testGetAll() throws Exception {
         mockMvc.perform(get("/api/labels").with(token))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testShow() throws Exception {
+    public void testGetById() throws Exception {
         mockMvc.perform(get("/api/labels/" + testLabel.getId()).with(token))
                 .andExpect(status().isOk());
     }
