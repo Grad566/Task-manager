@@ -26,7 +26,7 @@ public class LabelController {
     @Autowired
     private LabelService labelService;
     @GetMapping(path = "")
-    public ResponseEntity<List<LabelDTO>> index() {
+    public ResponseEntity<List<LabelDTO>> getAll() {
         var labels = labelService.getAll();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(labels.size()))
@@ -34,7 +34,7 @@ public class LabelController {
     }
 
     @GetMapping(path = "/{id}")
-    public LabelDTO show(@PathVariable Long id) {
+    public LabelDTO getById(@PathVariable Long id) {
         return labelService.show(id);
     }
 
@@ -51,7 +51,7 @@ public class LabelController {
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         labelService.destroy(id);
     }
 }

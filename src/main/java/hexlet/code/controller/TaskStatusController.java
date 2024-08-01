@@ -28,12 +28,12 @@ public class TaskStatusController {
     private TaskStatusService service;
 
     @GetMapping(path = "/{id}")
-    public TaskStatusDTO show(@PathVariable Long id) {
+    public TaskStatusDTO getById(@PathVariable Long id) {
         return service.show(id);
     }
 
     @GetMapping(path = "")
-    public ResponseEntity<List<TaskStatusDTO>> index() {
+    public ResponseEntity<List<TaskStatusDTO>> getAll() {
         var statuses = service.getAll();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(statuses.size()))
@@ -56,7 +56,7 @@ public class TaskStatusController {
     @DeleteMapping(path = "/{id}")
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         service.destroy(id);
     }
 

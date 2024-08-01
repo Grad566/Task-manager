@@ -28,12 +28,12 @@ public class UserController {
     @Autowired
     private UserService userService;
     @GetMapping(path = "/{id}")
-    public UserDTO show(@PathVariable Long id) {
+    public UserDTO getById(@PathVariable Long id) {
         return userService.show(id);
     }
 
     @GetMapping(path = "")
-    public ResponseEntity<List<UserDTO>> index() {
+    public ResponseEntity<List<UserDTO>> getAll() {
         var users = userService.getAll();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(users.size()))
@@ -53,7 +53,7 @@ public class UserController {
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         userService.destroy(id);
     }
 }

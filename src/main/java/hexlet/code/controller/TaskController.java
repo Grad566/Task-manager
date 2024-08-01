@@ -28,7 +28,7 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping(path = "")
-    public ResponseEntity<List<TaskDTO>> index(TaskParamDTO params) {
+    public ResponseEntity<List<TaskDTO>> getAll(TaskParamDTO params) {
         var tasks = taskService.getAll(params);
         return  ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(tasks.size()))
@@ -36,7 +36,7 @@ public class TaskController {
     }
 
     @GetMapping(path = "/{id}")
-    public TaskDTO show(@PathVariable Long id) {
+    public TaskDTO getById(@PathVariable Long id) {
         return taskService.show(id);
     }
 
@@ -53,7 +53,7 @@ public class TaskController {
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         taskService.destroy(id);
     }
 }
