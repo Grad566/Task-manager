@@ -1,4 +1,4 @@
-package hexlet.code.hendler;
+package hexlet.code.handler;
 
 import org.springframework.expression.AccessException;
 import org.springframework.http.HttpStatus;
