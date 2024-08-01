@@ -1,9 +1,9 @@
 package hexlet.code.service;
 
-import hexlet.code.dto.TaskCreatedDTO;
-import hexlet.code.dto.TaskDTO;
+import hexlet.code.dto.taskDTO.TaskCreatedDTO;
+import hexlet.code.dto.taskDTO.TaskDTO;
 import hexlet.code.dto.TaskParamDTO;
-import hexlet.code.dto.TaskUpdatedDTO;
+import hexlet.code.dto.taskDTO.TaskUpdatedDTO;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.specification.TaskSpecification;

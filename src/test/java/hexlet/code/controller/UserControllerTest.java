@@ -10,8 +10,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-import hexlet.code.dto.UserCreatedDTO;
-import hexlet.code.dto.UserUpdatedDTO;
+import hexlet.code.dto.userDTO.UserCreatedDTO;
+import hexlet.code.dto.userDTO.UserUpdatedDTO;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;

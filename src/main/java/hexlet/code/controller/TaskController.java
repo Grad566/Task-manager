@@ -1,9 +1,9 @@
 package hexlet.code.controller;
 
-import hexlet.code.dto.TaskCreatedDTO;
-import hexlet.code.dto.TaskDTO;
+import hexlet.code.dto.taskDTO.TaskCreatedDTO;
+import hexlet.code.dto.taskDTO.TaskDTO;
 import hexlet.code.dto.TaskParamDTO;
-import hexlet.code.dto.TaskUpdatedDTO;
+import hexlet.code.dto.taskDTO.TaskUpdatedDTO;
 import hexlet.code.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
