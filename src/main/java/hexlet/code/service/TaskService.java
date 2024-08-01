@@ -41,7 +41,7 @@ public class TaskService {
         return taskMapper.map(task);
     }
 
-//    @Transactional
+    @Transactional
     public TaskDTO updated(TaskUpdatedDTO data, Long id) {
         var task =  taskRepository.findById(id)
                 .orElseThrow();
