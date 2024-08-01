@@ -3,6 +3,7 @@ package hexlet.code.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.dto.TaskCreatedDTO;
+import hexlet.code.dto.TaskUpdatedDTO;
 import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
@@ -15,6 +16,7 @@ import hexlet.code.util.ModelGenerator;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -105,7 +107,6 @@ class TaskControllerTest {
     @Test
     public void testCreate() throws Exception {
         var taskStatus = taskStatusRepository.findBySlug("to_review").get();
-        var label = labelRepository.findByName("feature").get();
         var data = new TaskCreatedDTO();
         String name = "New Task Name";
         data.setTitle(name);
@@ -126,10 +127,10 @@ class TaskControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        var updatedData = new HashMap<String, String>();
-        updatedData.put("title", "news");
-        updatedData.put("content", "contents");
-        updatedData.put("assignee_id", "2");
+        var updatedData = new TaskUpdatedDTO();
+        updatedData.setTitle(JsonNullable.of("news"));
+        updatedData.setContent(JsonNullable.of("contents"));
+        updatedData.setAssigneeId(JsonNullable.of(2L));
 
         var request = put("/api/tasks/" + testTask.getId())
                 .with(token)
@@ -141,7 +142,7 @@ class TaskControllerTest {
         var updatedTask = taskRepository.findById(testTask.getId()).get();
 
         assertThat(updatedTask).isNotNull();
-        assertThat(updatedTask.getName()).isEqualTo(updatedData.get("title"));
+        assertThat(updatedTask.getName()).isEqualTo(updatedData.getTitle().get());
         assertThat(updatedTask.getIndex()).isEqualTo(testTask.getIndex());
     }
 
