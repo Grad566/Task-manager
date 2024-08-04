@@ -26,7 +26,7 @@ import java.util.List;
 public class LabelController {
     private final LabelService labelService;
 
-    @GetMapping(path = "")
+    @GetMapping()
     public ResponseEntity<List<LabelDTO>> getAll() {
         var labels = labelService.getAll();
         return ResponseEntity.ok()
@@ -39,7 +39,7 @@ public class LabelController {
         return labelService.show(id);
     }
 
-    @PostMapping(path = "")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public LabelDTO create(@Valid @RequestBody LabelCreatedDTO data) {
         return labelService.create(data);

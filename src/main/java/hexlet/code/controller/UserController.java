@@ -33,7 +33,7 @@ public class UserController {
         return userService.show(id);
     }
 
-    @GetMapping(path = "")
+    @GetMapping()
     public ResponseEntity<List<UserDTO>> getAll() {
         var users = userService.getAll();
         return ResponseEntity.ok()
@@ -41,7 +41,7 @@ public class UserController {
                 .body(users);
     }
 
-    @PostMapping(path = "")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO create(@Valid @RequestBody UserCreatedDTO data) {
         return userService.create(data);

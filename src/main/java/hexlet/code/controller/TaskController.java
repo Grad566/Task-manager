@@ -27,7 +27,7 @@ import java.util.List;
 public class TaskController {
     private final TaskService taskService;
 
-    @GetMapping(path = "")
+    @GetMapping()
     public ResponseEntity<List<TaskDTO>> getAll(TaskParamDTO params) {
         var tasks = taskService.getAll(params);
         return  ResponseEntity.ok()
@@ -40,7 +40,7 @@ public class TaskController {
         return taskService.show(id);
     }
 
-    @PostMapping(path = "")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public TaskDTO create(@Valid @RequestBody TaskCreatedDTO data) {
         return taskService.create(data);

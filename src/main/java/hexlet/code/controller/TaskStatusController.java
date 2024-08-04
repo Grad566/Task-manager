@@ -32,7 +32,7 @@ public class TaskStatusController {
         return service.show(id);
     }
 
-    @GetMapping(path = "")
+    @GetMapping()
     public ResponseEntity<List<TaskStatusDTO>> getAll() {
         var statuses = service.getAll();
         return ResponseEntity.ok()
@@ -40,7 +40,7 @@ public class TaskStatusController {
                 .body(statuses);
     }
 
-    @PostMapping(path = "")
+    @PostMapping()
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskStatusDTO create(@Valid @RequestBody TaskStatusCreatedDTO data) {
