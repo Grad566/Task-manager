@@ -132,4 +132,18 @@ public class UserControllerTest {
         mockMvc.perform(delete("/api/users/" + testUser.getId()).with(token))
                 .andExpect(status().isForbidden());
     }
+
+    @Test
+    public void testUpdateWithInvalidUser() throws Exception {
+        var updatedData = new UserUpdatedDTO();
+        updatedData.setEmail(JsonNullable.of("2008deous@gmail.com"));
+
+        var request = put("/api/users/" + testUser.getId())
+                .with(token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(updatedData));
+
+        mockMvc.perform(request)
+                .andExpect(status().isForbidden());
+    }
 }
