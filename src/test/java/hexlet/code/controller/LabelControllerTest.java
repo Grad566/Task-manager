@@ -7,7 +7,6 @@ import hexlet.code.dto.labelDTO.LabelUpdatedDTO;
 import hexlet.code.model.Label;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.util.ModelGenerator;
-import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -84,7 +84,7 @@ class LabelControllerTest {
         var label = labelRepository.findByName(data.getName()).get();
 
         assertNotNull(label);
-        Assertions.assertThat(label.getName()).isEqualTo(data.getName());
+        assertThat(label.getName()).isEqualTo(data.getName());
     }
 
     @Test

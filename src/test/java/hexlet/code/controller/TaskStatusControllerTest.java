@@ -6,7 +6,6 @@ import hexlet.code.dto.taskStatusDTO.TaskStatusUpdatedDTO;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.util.ModelGenerator;
-import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -82,8 +82,8 @@ class TaskStatusControllerTest {
         var taskStatus = repository.findBySlug(data.getSlug()).get();
 
         assertNotNull(taskStatus);
-        Assertions.assertThat(taskStatus.getName()).isEqualTo(data.getName());
-        Assertions.assertThat(taskStatus.getSlug()).isEqualTo(data.getSlug());
+        assertThat(taskStatus.getName()).isEqualTo(data.getName());
+        assertThat(taskStatus.getSlug()).isEqualTo(data.getSlug());
     }
 
     @Test
@@ -101,7 +101,7 @@ class TaskStatusControllerTest {
         var updatedTask = repository.findById(testTaskStatus.getId()).get();
 
         assertNotNull(updatedTask);
-        Assertions.assertThat(updatedTask.getName()).isEqualTo(updatedData.getName().get());
+        assertThat(updatedTask.getName()).isEqualTo(updatedData.getName().get());
     }
 
     @Test
