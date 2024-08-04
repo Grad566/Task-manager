@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.expression.AccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,7 +32,6 @@ public class UserService {
         return users.stream().map(userMapper::map).toList();
     }
 
-    @Transactional
     public UserDTO create(UserCreatedDTO data) {
         var user = userMapper.map(data);
         userRepository.save(user);
@@ -42,7 +40,6 @@ public class UserService {
     }
 
     @SneakyThrows
-    @Transactional
     public UserDTO update(UserUpdatedDTO data, Long id) {
         if (userUtil.isTheSameUser(id)) {
             var user = userRepository.findById(id)

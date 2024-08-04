@@ -7,7 +7,6 @@ import hexlet.code.dto.labelDTO.LabelUpdatedDTO;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.model.Label;
 import hexlet.code.repository.LabelRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,14 +29,12 @@ public class LabelService {
         return labelMapper.map(label);
     }
 
-    @Transactional
     public LabelDTO create(LabelCreatedDTO data) {
         Label label = labelMapper.map(data);
         labelRepository.save(label);
         return labelMapper.map(label);
     }
 
-    @Transactional
     public LabelDTO update(LabelUpdatedDTO data, Long id) {
         var label = labelRepository.findById(id)
                 .orElseThrow();

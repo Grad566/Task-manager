@@ -9,7 +9,6 @@ import hexlet.code.repository.TaskRepository;
 import hexlet.code.specification.TaskSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,14 +31,12 @@ public class TaskService {
         return taskMapper.map(task);
     }
 
-    @Transactional
     public TaskDTO create(TaskCreatedDTO data) {
         var task = taskMapper.map(data);
         taskRepository.save(task);
         return taskMapper.map(task);
     }
 
-    @Transactional
     public TaskDTO updated(TaskUpdatedDTO data, Long id) {
         var task =  taskRepository.findById(id)
                 .orElseThrow();
