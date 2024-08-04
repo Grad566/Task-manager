@@ -6,24 +6,21 @@ import hexlet.code.dto.userDTO.UserUpdatedDTO;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.util.UserUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.AccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
+@RequiredArgsConstructor
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private UserUtil userUtil;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final UserUtil userUtil;
 
     public UserDTO show(Long id) {
         var user = userRepository.findById(id)

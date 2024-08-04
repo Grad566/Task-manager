@@ -5,6 +5,7 @@ import hexlet.code.dto.taskStatusDTO.TaskStatusDTO;
 import hexlet.code.dto.taskStatusDTO.TaskStatusUpdatedDTO;
 import hexlet.code.service.TaskStatusService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/api/task_statuses")
 public class TaskStatusController {
-    @Autowired
-    private TaskStatusService service;
+    private final TaskStatusService service;
 
     @GetMapping(path = "/{id}")
     public TaskStatusDTO getById(@PathVariable Long id) {

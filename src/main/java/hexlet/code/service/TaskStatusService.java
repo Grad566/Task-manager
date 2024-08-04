@@ -5,19 +5,18 @@ import hexlet.code.dto.taskStatusDTO.TaskStatusDTO;
 import hexlet.code.dto.taskStatusDTO.TaskStatusUpdatedDTO;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.repository.TaskStatusRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
+@RequiredArgsConstructor
 @Service
 public class TaskStatusService {
-    @Autowired
-    private TaskStatusMapper mapper;
-
-    @Autowired
-    private TaskStatusRepository repository;
+    private final TaskStatusMapper mapper;
+    private final TaskStatusRepository repository;
 
     public TaskStatusDTO show(Long id) {
         var taskStatus = repository.findById(id)
