@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,11 +48,13 @@ public class UserController {
         return userService.create(data);
     }
 
+    @PreAuthorize("@userRepository.findById(#id).get().getEmail() == authentication.name")
     @PutMapping(path = "/{id}")
     public UserDTO update(@Valid @RequestBody UserUpdatedDTO data, @PathVariable Long id) {
         return userService.update(data, id);
     }
 
+    @PreAuthorize("@userRepository.findById(#id).get().getEmail() == authentication.name")
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
