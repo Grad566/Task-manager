@@ -38,9 +38,6 @@ make lint
 
 // запуск тестов
 make test 
-
-// запуск приложения без docker-compose
-make dev 
 ```
 
 ## Использование
